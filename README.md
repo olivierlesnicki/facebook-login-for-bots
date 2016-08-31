@@ -17,7 +17,7 @@ https://facebook-login-for-bots.herokuapp.com
 
 | Parameter | Description |
 | --- | --- |
-| application_id | The app ID of the application you want your user to authenticate with. Most of the time this will be the application you've created for the bot. |
-| authorization_code_uri | The Facebook authentication data (authResponse) will be sent via a `POST` request to this `URI`. A unique server made authorization code for this user must be returned in the body of the response. |
-| scope | A comma separated list of Facebook permissions you want the user to grant to your application.
+| `application_id` | The app ID of the application you want your user to authenticate with. Most of the time this will be the application you've created for the bot. |
+| `authorization_code_uri` | The Facebook authentication data (authResponse) will be sent via a `POST` request to this `URI`. A unique server made authorization code for this user must be returned in the body of the response. |
+| `scope` | A comma separated list of Facebook permissions you want the user to grant to your application.
  |
