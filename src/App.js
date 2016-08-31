@@ -48,10 +48,18 @@ class App extends Component {
               authResponse
             })
           })
-            .then(res => res.json())
+            .then(res => {
+              if (res.status >= 200 && res.status < 300) {
+                return res.json();
+              } else {
+                let error = new Error(res.statusText || res.status);
+                error.response = res;
+                throw error;
+              }
+            })
             .then(json => {
               this._loginSuccess(json.authorizationCode);
-            });
+            }, this._loginFailure);
         } else {
           this._loginFailure();
         }
