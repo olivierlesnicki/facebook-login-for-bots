@@ -1,0 +1,14 @@
+.App {
+  text-align: center;
+}
+
+.App-loading {
+  position: absolute;
+  margin: auto;
+  max-height: 72px;
+  max-width: 72px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
