@@ -6,7 +6,7 @@ import './App.css';
 
 const queryParams = queryString.parse(location.search);
 
-const APP_ID = queryParams.app_id;
+const APPLICATION_ID = queryParams.application_id;
 const SCOPE = queryParams.scope || 'public_profile';
 const ACCOUNT_LINKING_TOKEN = queryParams.account_linking_token;
 const AUTHORIZATION_CODE_URI = queryParams.authorization_code_uri;
@@ -34,7 +34,7 @@ class App extends Component {
       let FB = window.FB;
 
       FB.init({
-        appId      : APP_ID,
+        appId      : APPLICATION_ID,
         cookie     : true,
         version    : 'v2.5'
       });
