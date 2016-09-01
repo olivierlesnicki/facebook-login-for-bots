@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = () => {
       let FB = window.FB;
 
       FB.init({
