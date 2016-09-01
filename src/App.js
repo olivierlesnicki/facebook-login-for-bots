@@ -45,7 +45,7 @@ class App extends Component {
             method: 'POST',
             body: JSON.stringify({
               accountLinkingToken: ACCOUNT_LINKING_TOKEN,
-              authResponse
+              authResponse: response.authResponse
             })
           })
             .then(res => {
