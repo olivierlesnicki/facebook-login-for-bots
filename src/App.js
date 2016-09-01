@@ -1,6 +1,6 @@
+import 'whatwg-fetch';
 import React, { Component } from 'react';
 import queryString from 'query-string';
-import fetch from 'node-fetch';
 import loading from './loading.svg';
 import './App.css';
 
