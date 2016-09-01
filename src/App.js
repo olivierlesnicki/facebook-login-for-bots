@@ -72,8 +72,6 @@ class App extends Component {
         cookie     : true,
         version    : 'v2.5'
       });
-
-      this._login();
     };
 
     (function(d, s, id) {
@@ -88,11 +86,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <img
-          className="App-loading"
-          alt="Loading"
-          src={loading}
-        />
+        <button onClick={this._login}>
+          Login with Facebook
+        </button>
       </div>
     );
   }
