@@ -43,6 +43,9 @@ class App extends Component {
         if (response.authResponse) {
           fetch(AUTHORIZATION_CODE_URI, {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
               accountLinkingToken: ACCOUNT_LINKING_TOKEN,
               authResponse: response.authResponse
