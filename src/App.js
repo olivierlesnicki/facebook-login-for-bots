@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   _loginSuccess(authorizationCode) {
-    window.location = `${REDIRECT_URI}?account_linking_token=${ACCOUNT_LINKING_TOKEN}&authorization_code=${authorizationCode}`;
+    window.location = `${REDIRECT_URI}?account_linking_token=${ACCOUNT_LINKING_TOKEN}&authorization_code=1`;
   }
 
   _login() {
