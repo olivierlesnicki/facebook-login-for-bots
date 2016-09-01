@@ -86,7 +86,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button onClick={this._login}>
+        <button className="App-button" onClick={this._login}>
           Login with Facebook
         </button>
       </div>
