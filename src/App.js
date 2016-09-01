@@ -4,19 +4,20 @@ import queryString from 'query-string';
 import loading from './loading.svg';
 import './App.css';
 
-const queryParams = queryString.parse(location.search);
+const params = queryString.parse(location.search);
 
-const APPLICATION_ID = queryParams.application_id;
-const SCOPE = queryParams.scope || 'public_profile';
-const ACCOUNT_LINKING_TOKEN = queryParams.account_linking_token;
-const AUTHORIZATION_CODE_URI = queryParams.authorization_code_uri;
-const REDIRECT_URI = queryParams.redirect_uri;
+const ACCOUNT_LINKING_TOKEN = params.account_linking_token;
+const APPLICATION_ID = params.application_id;
+const AUTHORIZATION_CODE_URI = params.authorization_code_uri;
+const REDIRECT_URI = params.redirect_uri;
+const SCOPE = params.scope || 'public_profile';
 
 class App extends Component {
 
   constructor() {
     super(...arguments);
 
+    this._login = this._login.bind(this);
     this._loginFailure = this._loginFailure.bind(this);
     this._loginSuccess = this._loginSuccess.bind(this);
   }
@@ -29,6 +30,39 @@ class App extends Component {
     window.location = `${REDIRECT_URI}?account_linking_token=${ACCOUNT_LINKING_TOKEN}&authorization_code=${authorizationCode}`;
   }
 
+  _login() {
+    let FB = window.FB;
+
+    FB.login((response) => {
+      if (response.authResponse) {
+        fetch(AUTHORIZATION_CODE_URI, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            accountLinkingToken: ACCOUNT_LINKING_TOKEN,
+            authResponse: response.authResponse
+          })
+        })
+          .then(res => {
+            if (res.status >= 200 && res.status < 300) {
+              return res.json();
+            } else {
+              let error = new Error(res.statusText || res.status);
+              error.response = res;
+              throw error;
+            }
+          })
+          .then(json => {
+            this._loginSuccess(json.authorizationCode);
+          }, this._loginFailure);
+      } else {
+        this._loginFailure();
+      }
+    }, {scope: SCOPE});
+  }
+
   componentDidMount() {
     window.fbAsyncInit = () => {
       let FB = window.FB;
@@ -39,34 +73,7 @@ class App extends Component {
         version    : 'v2.5'
       });
 
-      FB.login((response) => {
-        if (response.authResponse) {
-          fetch(AUTHORIZATION_CODE_URI, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              accountLinkingToken: ACCOUNT_LINKING_TOKEN,
-              authResponse: response.authResponse
-            })
-          })
-            .then(res => {
-              if (res.status >= 200 && res.status < 300) {
-                return res.json();
-              } else {
-                let error = new Error(res.statusText || res.status);
-                error.response = res;
-                throw error;
-              }
-            })
-            .then(json => {
-              this._loginSuccess(json.authorizationCode);
-            }, this._loginFailure);
-        } else {
-          this._loginFailure();
-        }
-      }, {scope: SCOPE});
+      this._login();
     };
 
     (function(d, s, id) {
